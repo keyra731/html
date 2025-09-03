@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Unidades Avanzado</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    select, input { margin: 0.5em; padding: 0.3em; }
+    .result { margin-top: 1em; font-size: 1.2em; color: #2e8b57; }
+  </style>
+</head>
+<body>
+  <h1>Conversor de Unidades</h1>
+  <label>Tipo:
+    <select id="tipo" onchange="actualizarUnidades()">
+      <option value="longitud">Longitud</option>
+      <option value="peso">Peso</option>
+      <option value="temperatura">Temperatura</option>
+    </select>
+  </label>
+  <br>
+  <label>De: <select id="de"></select></label>
+  <label>A: <select id="a"></select></label>
+  <br>
+  <label>Cantidad: <input type="number" id="cantidad" value="1"></label>
+  <button onclick="convertir()">Convertir</button>
+  <div class="result" id="resultado"></div>
+  <script>
+    const unidades = {
+      longitud: ['Metro', 'Kilómetro', 'Milla', 'Centímetro'],
+      peso: ['Kilogramo', 'Gramo', 'Libra'],
+      temperatura: ['Celsius', 'Fahrenheit', 'Kelvin']
+    };
+    function actualizarUnidades() {
+      let tipo = document.getElementById('tipo').value;
+      let de = document.getElementById('de');
+      let a = document.getElementById('a');
+      de.innerHTML = unidades[tipo].map(u=>`<option value="${u}">${u}</option>`).join('');
+      a.innerHTML = unidades[tipo].map(u=>`<option value="${u}">${u}</option>`).join('');
+    }
+    actualizarUnidades();
+
+    function convertir() {
+      let tipo = document.getElementById('tipo').value;
+      let de = document.getElementById('de').value;
+      let a = document.getElementById('a').value;
+      let cantidad = +document.getElementById('cantidad').value;
+      let resultado = 0;
+
+      // Longitud
+      const longitudes = {Metro:1, Kilómetro:1000, Centímetro:0.01, Milla:1609.34};
+      // Peso
+      const pesos = {Kilogramo:1, Gramo:0.001, Libra:0.453592};
+      // Temperatura
+      function tempConvert(val, from, to) {
+        if(from==='Celsius' && to==='Fahrenheit') return val*9/5+32;
+        if(from==='Fahrenheit' && to==='Celsius') return (val-32)*5/9;
+        if(from==='Celsius' && to==='Kelvin') return val+273.15;
+        if(from==='Kelvin' && to==='Celsius') return val-273.15;
+        if(from==='Fahrenheit' && to==='Kelvin') return (val-32)*5/9+273.15;
+        if(from==='Kelvin' && to==='Fahrenheit') return (val-273.15)*9/5+32;
+        return val;
+      }
+
+      if(tipo==='longitud') {
+        resultado = cantidad * longitudes[de] / longitudes[a];
+      } else if(tipo==='peso') {
+        resultado = cantidad * pesos[de] / pesos[a];
+      } else if(tipo==='temperatura') {
+        resultado = tempConvert(cantidad, de, a);
+      }
+      document.getElementById('resultado').textContent = 
+        `Resultado: ${resultado.toFixed(5)} ${a}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Galería de Imágenes con Filtro y Modal</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em;}
+    .filtro { margin-bottom:1em;}
+    .galeria { display:flex; flex-wrap:wrap; gap:10px;}
+    .imgbox { width:150px; height:120px; overflow:hidden; cursor:pointer; border:2px solid #ddd; border-radius:8px;}
+    .imgbox img { width:100%; height:100%; object-fit:cover;}
+    #modal {display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;}
+    #modal img{max-width:80vw;max-height:80vh;}
+    #modal span{color:#fff;font-size:2em;position:absolute;top:20px;right:40px;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <h1>Galería de Imágenes</h1>
+  <div class="filtro">
+    <label>Filtrar por categoría:
+      <select id="cat" onchange="filtrar()">
+        <option value="todas">Todas</option>
+        <option value="naturaleza">Naturaleza</option>
+        <option value="ciudad">Ciudad</option>
+        <option value="animales">Animales</option>
+      </select>
+    </label>
+  </div>
+  <div class="galeria" id="galeria"></div>
+  <div id="modal" onclick="cerrarModal()">
+    <span onclick="cerrarModal()">×</span>
+    <img id="modalImg" src="" alt="">
+  </div>
+  <script>
+    const imagenes=[
+      {src:"https://images.unsplash.com/photo-1506744038136-46273834b3fb",cat:"naturaleza"},
+      {src:"https://images.unsplash.com/photo-1465101046530-73398c7f28ca",cat:"animales"},
+      {src:"https://images.unsplash.com/photo-1465101178521-c1a08bbd7a6d",cat:"ciudad"},
+      {src:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e",cat:"naturaleza"},
+      {src:"https://images.unsplash.com/photo-1518717758536-85ae29035b6d",cat:"animales"},
+      {src:"https://images.unsplash.com/photo-1499346030926-9a72daac6c63",cat:"ciudad"},
+      {src:"https://images.unsplash.com/photo-1465101046530-73398c7f28ca",cat:"animales"},
+      {src:"https://images.unsplash.com/photo-1444065381814-865dc9da92c0",cat:"naturaleza"}
+    ];
+    function mostrarGaleria(filtro="todas") {
+      const gal = document.getElementById('galeria');
+      gal.innerHTML = '';
+      imagenes.filter(img=>filtro==="todas"||img.cat===filtro)
+      .forEach(img=>{
+        gal.innerHTML += `<div class="imgbox" onclick="abrirModal('${img.src}')">
+          <img src="${img.src}" alt="">
+        </div>`;
+      });
+    }
+    function filtrar() {
+      let cat = document.getElementById('cat').value;
+      mostrarGaleria(cat);
+    }
+    function abrirModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function cerrarModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+    mostrarGaleria();
+  </script>
+</body>
+</html>

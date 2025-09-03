@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Contacto Avanzado</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    form { max-width: 400px; margin: auto; }
+    label { display: block; margin: 1em 0 0.3em; }
+    input, textarea { width: 100%; padding: 8px; }
+    #resumen { background: #e6ffe6; padding: 1em; margin-top: 1em; display: none; }
+    .error { color: #b22222; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Formulario de Contacto</h1>
+  <form id="form">
+    <label>Nombre <input type="text" id="nombre" required></label>
+    <span class="error" id="errNombre"></span>
+    <label>Email <input type="email" id="email" required></label>
+    <span class="error" id="errEmail"></span>
+    <label>Mensaje <textarea id="mensaje" required></textarea></label>
+    <span class="error" id="errMensaje"></span>
+    <button type="button" onclick="mostrarResumen()">Revisar</button>
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="resumen"></div>
+  <script>
+    function validarNombre() {
+      const nombre = document.getElementById('nombre').value;
+      document.getElementById('errNombre').textContent = 
+        nombre.length < 3 ? 'El nombre debe tener al menos 3 caracteres.' : '';
+    }
+    function validarEmail() {
+      const email = document.getElementById('email').value;
+      document.getElementById('errEmail').textContent = 
+        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) ? '' : 'Formato de email inválido.';
+    }
+    function validarMensaje() {
+      const mensaje = document.getElementById('mensaje').value;
+      document.getElementById('errMensaje').textContent = 
+        mensaje.length < 10 ? 'El mensaje debe tener al menos 10 caracteres.' : '';
+    }
+    document.getElementById('nombre').oninput = validarNombre;
+    document.getElementById('email').oninput = validarEmail;
+    document.getElementById('mensaje').oninput = validarMensaje;
+
+    function mostrarResumen() {
+      validarNombre(); validarEmail(); validarMensaje();
+      if (!document.getElementById('errNombre').textContent &&
+          !document.getElementById('errEmail').textContent &&
+          !document.getElementById('errMensaje').textContent) {
+        document.getElementById('resumen').style.display = 'block';
+        document.getElementById('resumen').innerHTML =
+          `<strong>Resumen:</strong><br>
+           Nombre: ${document.getElementById('nombre').value}<br>
+           Email: ${document.getElementById('email').value}<br>
+           Mensaje: ${document.getElementById('mensaje').value}`;
+      } else {
+        document.getElementById('resumen').style.display = 'none';
+      }
+    }
+
+    document.getElementById('form').onsubmit = function(e){
+      validarNombre(); validarEmail(); validarMensaje();
+      if (document.getElementById('errNombre').textContent ||
+          document.getElementById('errEmail').textContent ||
+          document.getElementById('errMensaje').textContent) {
+        e.preventDefault();
+        alert('Corrige los errores antes de enviar.');
+      } else {
+        alert('Formulario enviado correctamente.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de Contraseñas Seguras</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    .box { background:#f8f8f8; padding:2em; border-radius:10px; max-width:400px; margin:auto;}
+    label { display:block; margin:0.7em 0;}
+    input[type="number"] { width:60px;}
+    .pw { font-weight: bold; font-size:1.4em; color:#2e8b57;}
+  </style>
+</head>
+<body>
+  <h1>Generador de Contraseñas Seguras</h1>
+  <div class="box">
+    <label>Longitud <input type="number" id="longitud" value="12" min="6" max="32"></label>
+    <label><input type="checkbox" id="mayus" checked> Incluir Mayúsculas</label>
+    <label><input type="checkbox" id="minus" checked> Incluir Minúsculas</label>
+    <label><input type="checkbox" id="num" checked> Incluir Números</label>
+    <label><input type="checkbox" id="sim" checked> Incluir Símbolos</label>
+    <button onclick="generar()">Generar</button>
+    <div class="pw" id="pw"></div>
+  </div>
+  <script>
+    function generar() {
+      let longitud = +document.getElementById('longitud').value;
+      let mayus = document.getElementById('mayus').checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':'';
+      let minus = document.getElementById('minus').checked ? 'abcdefghijklmnopqrstuvwxyz':'';
+      let num = document.getElementById('num').checked ? '0123456789':'';
+      let sim = document.getElementById('sim').checked ? '!@#$%^&*()[]{}<>_-+=':'';
+      let chars = mayus+minus+num+sim;
+      let pw = '';
+      if(!chars) { document.getElementById('pw').textContent = "Selecciona al menos una opción."; return;}
+      for (let i=0;i<longitud;i++) pw += chars[Math.floor(Math.random()*chars.length)];
+      document.getElementById('pw').textContent = pw;
+    }
+  </script>
+</body>
+</html>
