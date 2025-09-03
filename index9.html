@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 9 - Juego Adivina el Número Pro</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(135deg,#e94057 0%,#f27121 100%); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #e9405799;}
+    .game-box { background:#fff; max-width:410px; margin:2em auto; padding:2em 2.5em; border-radius:20px; box-shadow:0 4px 20px #e9405744; text-align:center;}
+    input[type="number"] { font-size:1.2em; padding:0.6em; border-radius:10px; border:none; width:7em; text-align:center;}
+    button { background:linear-gradient(90deg,#e94057,#f27121); color:#fff; font-weight:700; margin-top:15px; padding:0.7em 1.4em; border-radius:10px; border:none; cursor:pointer; transition:transform .15s;}
+    button:hover { transform:scale(1.07);}
+    #feedback { font-size:1.3em; font-weight:700; margin-top:1.2em; color:#e94057; min-height:2em; transition:all .4s;}
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#e94057; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #e9405799; }
+    .btn-icon { font-size:1.5em; }
+    .tries { color:#f27121; font-size:1.1em;}
+    .newgame { background:linear-gradient(90deg,#f27121,#e94057); color:#fff; margin-top:1em; border-radius:8px; border:none; font-weight:600; padding:0.5em 1.2em;}
+  </style>
+</head>
+<body>
+  <h1>Juego: Adivina el Número Pro</h1>
+  <div class="game-box">
+    <p>Adivina un número entre <b>1 y 100</b></p>
+    <input type="number" id="guess" min="1" max="100">
+    <button onclick="checkGuess()">Intentar</button>
+    <div id="feedback"></div>
+    <div class="tries" id="tries"></div>
+    <button class="newgame" onclick="newGame()">Nuevo juego</button>
+  </div>
+  <a href="index1.html" class="btn btn-2">
+    <div class="btn-icon">🔄</div>
+    <span>Volver a Índice 1</span>
+  </a>
+  <script>
+    let num, intentos;
+    function newGame(){
+      num = Math.floor(Math.random()*100)+1;
+      intentos = 0;
+      feedback.textContent = '';
+      tries.textContent = 'Intentos: 0';
+      guess.value='';
+      guess.disabled = false;
+    }
+    function checkGuess(){
+      const val = parseInt(guess.value);
+      if(isNaN(val) || val<1 || val>100){
+        feedback.textContent = "Ingresa un número válido.";
+        return;
+      }
+      intentos++;
+      tries.textContent = `Intentos: ${intentos}`;
+      if(val === num){
+        feedback.textContent = "¡Correcto! ¡Ganaste! 🎉";
+        guess.disabled=true;
+      } else if(val < num){
+        feedback.textContent = "Demasiado bajo. ⬇";
+      } else {
+        feedback.textContent = "Demasiado alto. ⬆";
+      }
+    }
+    newGame();
+  </script>
+</body>
+</html>

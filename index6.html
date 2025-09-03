@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 6 - Cronómetro y Temporizador</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(135deg,#43cea2,#185a9d); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #185a9d99;}
+    .crono-box { background:#fff; max-width:410px; margin:2em auto; padding:2em 2.5em; border-radius:20px; box-shadow:0 4px 20px #185a9d44; text-align:center;}
+    .crono { font-size:2.5em; color:#185a9d; font-weight:700; margin-bottom:1em; letter-spacing:2px; }
+    button { background:linear-gradient(90deg,#43cea2,#185a9d); color:#fff; font-weight:700; margin:0.4em; border-radius:10px; border:none; padding:0.7em 1.4em; cursor:pointer; transition:transform .15s;}
+    button:hover { transform:scale(1.07);}
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#185a9d; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #185a9d99; }
+    .btn-icon { font-size:1.5em; }
+    .timer-box { margin-top:2em; }
+    .timer-label { font-size:1.1em; color:#43cea2;}
+    .timer-input { padding:0.5em; border-radius:8px; border:none; width:4em;}
+  </style>
+</head>
+<body>
+  <h1>Cronómetro y Temporizador</h1>
+  <div class="crono-box">
+    <div class="crono" id="crono">00:00:00</div>
+    <button onclick="startCrono()">Iniciar</button>
+    <button onclick="stopCrono()">Detener</button>
+    <button onclick="resetCrono()">Reiniciar</button>
+    <div class="timer-box">
+      <span class="timer-label">Temporizador (segundos):</span>
+      <input type="number" id="timer" min="1" class="timer-input">
+      <button onclick="setTimer()">Iniciar temporizador</button>
+      <div id="timer-msg" class="timer-label"></div>
+    </div>
+  </div>
+  <a href="index7.html" class="btn btn-2">
+    <div class="btn-icon">📁</div>
+    <span>Índice 7</span>
+  </a>
+  <script>
+    let intervalo, segundos = 0, timerInt, timerEnd = 0;
+    function update(){
+      let h = Math.floor(segundos/3600).toString().padStart(2,0);
+      let m = Math.floor((segundos%3600)/60).toString().padStart(2,0);
+      let s = (segundos%60).toString().padStart(2,0);
+      crono.textContent = `${h}:${m}:${s}`;
+    }
+    function startCrono(){
+      if(!intervalo) intervalo = setInterval(()=>{segundos++;update();},1000);
+    }
+    function stopCrono(){ clearInterval(intervalo); intervalo = null;}
+    function resetCrono(){segundos=0;update();}
+    function setTimer(){
+      stopCrono();
+      clearInterval(timerInt);
+      let t = parseInt(timer.value);
+      if(isNaN(t)||t<1) {timer-msg.textContent="Ingrese un valor válido."; return;}
+      timerEnd = t;
+      segundos = 0;
+      update();
+      timer-msg.textContent="Temporizador iniciado.";
+      timerInt = setInterval(()=>{
+        segundos++;
+        update();
+        if(segundos>=timerEnd){
+          timer-msg.textContent="¡Tiempo terminado!";
+          clearInterval(timerInt);
+        }
+      },1000);
+    }
+    update();
+  </script>
+</body>
+</html>

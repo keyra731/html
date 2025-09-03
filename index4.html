@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 4 - Conversor de Monedas Animado</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(120deg,#fd5e53 0%,#fff6e0 100%); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #fd5e5399;}
+    form { background:#fff; max-width:410px; margin:2em auto; padding:2em 2.5em; border-radius:20px; box-shadow:0 4px 20px #fd5e5366; display:flex; flex-direction:column; gap:1em;}
+    input, select, button { font-size:1.1em; padding:0.7em; border:none; border-radius:10px;}
+    select { background:#fff6e0; }
+    button { background:linear-gradient(90deg,#fd5e53,#faad80); color:#fff; font-weight:700; margin-top:15px; cursor:pointer; transition:transform .15s;}
+    button:hover { transform:scale(1.07);}
+    #resultado { text-align:center; color:#fd5e53; font-size:1.25em; margin-top:1em; font-weight:600; animation:fadein .5s;}
+    @keyframes fadein { from{opacity:0;} to{opacity:1;} }
+    .moneda-animada { font-size:2.5em; text-align:center; margin-bottom:0.7em; animation:salto 1.1s infinite alternate;}
+    @keyframes salto { from{transform:translateY(0);} to{transform:translateY(-12px);} }
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#fd5e53; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #fd5e5399; }
+    .btn-icon { font-size:1.5em; }
+  </style>
+</head>
+<body>
+  <h1>Conversor de Monedas</h1>
+  <div class="moneda-animada">💰</div>
+  <form id="convForm">
+    <input type="number" id="cantidad" placeholder="Cantidad" required>
+    <select id="de">
+      <option value="MXN">🇲🇽 MXN</option>
+      <option value="USD">🇺🇸 USD</option>
+      <option value="EUR">🇪🇺 EUR</option>
+    </select>
+    <span style="text-align:center;">a</span>
+    <select id="a">
+      <option value="USD">🇺🇸 USD</option>
+      <option value="MXN">🇲🇽 MXN</option>
+      <option value="EUR">🇪🇺 EUR</option>
+    </select>
+    <button type="submit">Convertir</button>
+  </form>
+  <p id="resultado"></p>
+  <a href="index5.html" class="btn btn-2">
+    <div class="btn-icon">📁</div>
+    <span>Índice 5</span>
+  </a>
+  <script>
+    const tasas = {
+      MXN: {USD: 0.06, EUR: 0.055, MXN: 1},
+      USD: {MXN: 16.5, EUR: 0.92, USD: 1},
+      EUR: {MXN: 18.2, USD: 1.09, EUR: 1}
+    };
+    document.getElementById('convForm').onsubmit = function(e){
+      e.preventDefault();
+      const cant = parseFloat(cantidad.value);
+      const deMon = de.value;
+      const aMon = a.value;
+      if(deMon===aMon){ resultado.textContent = '¡Las monedas son iguales!'; return;}
+      const res = (cant * tasas[deMon][aMon]).toFixed(2);
+      resultado.textContent = `Resultado: ${res} ${aMon}`;
+      resultado.style.animation = 'fadein .5s';
+    }
+  </script>
+</body>
+</html>

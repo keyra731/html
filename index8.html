@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 8 - Mapa Interactivo Moderno</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #11998e99;}
+    #mapa { width:95vw; max-width:600px; height:400px; margin:2em auto; border-radius:22px; box-shadow:0 6px 24px #11998e99;}
+    .leaflet-container { border-radius:22px;}
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#11998e; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #11998e99; }
+    .btn-icon { font-size:1.5em; }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+  <h1>Mapa Interactivo Moderno</h1>
+  <div id="mapa"></div>
+  <a href="index9.html" class="btn btn-2">
+    <div class="btn-icon">📁</div>
+    <span>Índice 9</span>
+  </a>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('mapa').setView([19.43, -99.13], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18
+    }).addTo(map);
+    L.marker([19.43, -99.13]).addTo(map).bindPopup('CDMX').openPopup();
+    L.circle([19.43, -99.13], {color:'#38ef7d',fillColor:'#38ef7d',fillOpacity:.5,radius:150000}).addTo(map);
+  </script>
+</body>
+</html>

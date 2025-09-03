@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 7 - Galería de Imágenes Animada</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(135deg,#ff5f6d,#ffc371); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #ff5f6d99;}
+    .galeria { display:flex; flex-wrap:wrap; justify-content:center; gap:2em; margin:2em auto;}
+    .gal-img { width:180px; height:120px; object-fit:cover; border-radius:18px; box-shadow:0 4px 16px #ff5f6d33; transition:transform .2s,box-shadow .2s; cursor:pointer;}
+    .gal-img:hover { transform:scale(1.13) rotate(-2deg); box-shadow:0 8px 32px #ff5f6d88;}
+    .modal { display:none; position:fixed; inset:0; background:#0008; justify-content:center; align-items:center; z-index:99;}
+    .modal img { max-width:80vw; max-height:80vh; border-radius:18px; box-shadow:0 8px 32px #ff5f6d;}
+    .modal.active { display:flex; animation:fadein .4s;}
+    @keyframes fadein { from{opacity:0;} to{opacity:1;} }
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#ff5f6d; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #ff5f6d99; }
+    .btn-icon { font-size:1.5em; }
+  </style>
+</head>
+<body>
+  <h1>Galería de Imágenes Animada</h1>
+  <div class="galeria">
+    <img src="https://placekitten.com/320/210" alt="Gato 1" class="gal-img">
+    <img src="https://placekitten.com/310/205" alt="Gato 2" class="gal-img">
+    <img src="https://placekitten.com/330/220" alt="Gato 3" class="gal-img">
+    <img src="https://placekitten.com/325/215" alt="Gato 4" class="gal-img">
+  </div>
+  <div class="modal" id="modal">
+    <img src="" alt="Grande">
+  </div>
+  <a href="index8.html" class="btn btn-2">
+    <div class="btn-icon">📁</div>
+    <span>Índice 8</span>
+  </a>
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImg = modal.querySelector('img');
+    document.querySelectorAll('.gal-img').forEach(img=>{
+      img.onclick = function(){
+        modalImg.src = img.src;
+        modal.classList.add('active');
+      }
+    });
+    modal.onclick = function(){
+      modal.classList.remove('active');
+    }
+  </script>
+</body>
+</html>

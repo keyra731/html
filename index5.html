@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Index 5 - Lista de Tareas Animada</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { background:linear-gradient(135deg,#56ab2f,#a8e063); font-family:'Montserrat',sans-serif;}
+    h1 { text-align:center; color:#fff; margin-top:2em; text-shadow:0 2px 8px #56ab2f99;}
+    form { background:#fff; max-width:410px; margin:2em auto; padding:2em 2.5em; border-radius:20px; box-shadow:0 4px 20px #56ab2f44; display:flex; gap:1em;}
+    input { font-size:1.1em; padding:0.7em; border:none; border-radius:10px; flex:1;}
+    button { background:linear-gradient(90deg,#56ab2f,#a8e063); color:#fff; font-weight:700; padding:0.7em 1.4em; border-radius:10px; border:none; cursor:pointer; transition:transform .15s;}
+    button:hover { transform:scale(1.07);}
+    ul { list-style:none; padding:0; max-width:410px; margin:1.5em auto; }
+    li { background:#fff; margin-bottom:0.7em; padding:0.9em; border-radius:12px; box-shadow:0 2px 8px #a8e06366; font-size:1.15em; display:flex; align-items:center; gap:0.8em; animation:slidein .5s;}
+    @keyframes slidein { from{opacity:0;transform:translateX(40px);} to{opacity:1;transform:translateX(0);} }
+    .done { text-decoration:line-through; opacity:0.6; }
+    .del-btn { background:#e63946; color:#fff; border:none; border-radius:8px; padding:0.6em 1em; cursor:pointer; font-weight:700;}
+    .del-btn:hover { background:#b71c1c;}
+    .btn-2 { display:flex; align-items:center; gap:0.5em; background:#56ab2f; color:#fff; padding:0.6em 1.5em; border-radius:10px; text-decoration:none; margin:2em auto; width:max-content; font-weight:600; box-shadow:0 2px 12px #0002;}
+    .btn-2:hover { box-shadow:0 6px 24px #56ab2f99; }
+    .btn-icon { font-size:1.5em; }
+  </style>
+</head>
+<body>
+  <h1>Lista de Tareas Interactiva</h1>
+  <form id="todoForm">
+    <input type="text" id="tarea" placeholder="Nueva tarea" required>
+    <button type="submit">Agregar</button>
+  </form>
+  <ul id="lista"></ul>
+  <a href="index6.html" class="btn btn-2">
+    <div class="btn-icon">📁</div>
+    <span>Índice 6</span>
+  </a>
+  <script>
+    const lista = document.getElementById('lista');
+    document.getElementById('todoForm').onsubmit = function(e){
+      e.preventDefault();
+      const valor = tarea.value.trim();
+      if(!valor) return;
+      const li = document.createElement('li');
+      li.textContent = valor;
+      const del = document.createElement('button');
+      del.textContent = '🗑';
+      del.className = 'del-btn';
+      del.onclick = ()=>li.remove();
+      li.onclick = ()=>{
+        li.classList.toggle('done');
+      }
+      li.appendChild(del);
+      lista.appendChild(li);
+      tarea.value = '';
+    }
+  </script>
+</body>
+</html>
